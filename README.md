@@ -17,6 +17,14 @@
 
 > The UI tests rely on `process.env.ADMIN_USERNAME` and `process.env.ADMIN_PASSWORD` for admin login. The authentication helper reads these values from `.env` via `dotenv`.
 
+### GitHub Actions CI Secrets
+
+For CI runs, add the following repository secrets under GitHub Settings > Secrets and variables > Actions:
+- `ADMIN_USERNAME`
+- `ADMIN_PASSWORD`
+
+The workflow loads these secrets into the test environment so admin login can succeed in GitHub Actions.
+
 ## Run Instructions
 
 Run all tests with Playwright:
