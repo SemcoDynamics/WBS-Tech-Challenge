@@ -1,5 +1,14 @@
 import { Page, Locator } from '@playwright/test';
 
+export enum RoomAmenity {
+  WIFI = 'WiFi',
+  REFRESHMENTS = 'Refreshments',
+  TV = 'TV',
+  SAFE = 'Safe',
+  RADIO = 'Radio',
+  VIEWS = 'Views'
+}
+
 export class AdminRoomsPage {
   readonly page: Page;
   readonly roomName: Locator;
@@ -20,6 +29,8 @@ export class AdminRoomsPage {
   readonly descriptionInput: Locator;
   readonly updateButton: Locator;
   readonly roomDelete: Locator;
+  readonly accessibleLocator: Locator;
+  readonly imageInput: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -37,9 +48,15 @@ export class AdminRoomsPage {
     this.editButton = page.getByRole('button', { name: 'Edit' });
     this.typeSelect = page.getByLabel('Type:');
     this.accessibleSelect = page.getByLabel('Accessible:');
+    this.accessibleLocator = page.locator('#accessible');
     this.roomPriceInput = page.getByRole('textbox', { name: 'Room price:' });
     this.descriptionInput = page.getByRole('textbox', { name: 'Description' });
     this.updateButton = page.getByRole('button', { name: 'Update' });
     this.roomDelete = page.locator('.roomDelete');
+    this.imageInput = page.getByRole('textbox', { name: 'Image:' });
   }
+
+  async setAccessibleOption(option: string) {
+    await this.accessibleSelect.selectOption(option);
+}
 }

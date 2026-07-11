@@ -8,6 +8,7 @@ import { AdminRoomsPage } from '../../pages/adminRoomsPage';
 
 const adminUsername: string = process.env.ADMIN_USERNAME!;
 const adminPassword: string = process.env.ADMIN_PASSWORD!;
+const roomImageUrl: string = 'https://images.pexels.com/photos/19836834/pexels-photo-19836834.jpeg';
 
 let loginPage: LoginPage;
 let loginHelper: LoginHelper;
@@ -49,6 +50,7 @@ test('Update a booking', async ({ page }) => {
   await adminRooms.accessibleSelect.selectOption('true');
   await adminRooms.roomPriceInput.fill('30');
   await adminRooms.descriptionInput.fill('This is a family room with accessibility features.');
+  await adminRooms.imageInput.setInputFiles(roomImageUrl);
   await adminRooms.updateButton.click();
 });
 

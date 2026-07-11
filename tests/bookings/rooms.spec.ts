@@ -1,29 +1,41 @@
 /// <reference types="node" />
-// tests/bookings/rooms.spec.ts
-import { test, expect } from '@playwright/test';
-import { LoginPage } from '../../pages/loginPage';
-import { LoginHelper } from '../../helpers/loginHelper';
+import { test, expect } from '../../fixtures/admin_fixtures';
+import { gridCellLabelFor } from '../../helpers/dataHelper';
+import { RoomAmenity } from '../../pages/adminRoomsPage';
+import { RoomsPage } from '../../pages/rooms.page';
 
-let loginPage: LoginPage;
-let loginHelper: LoginHelper;
+test.describe('Room Bookings', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/');
+  });
 
-test.beforeEach(async ({ page }) => {
-  loginPage = new LoginPage(page);
-  loginHelper = new LoginHelper(page);
+  test('Successfully book a room', async ({ page, adminCreateRoom }) => {
+    const roomsPage = new RoomsPage(page);
 
+    // Create a room using the adminCreateRoom fixture
+    await adminCreateRoom({ name: '104', price: '20', accessibility: true, amenities: [ RoomAmenity.WIFI, RoomAmenity.TV ] });
+
+    // 1. Select Dates
+    await page.goto('/');
+    await roomsPage.openDatePicker();
+
+    // Using your newly imported helper function
+    const dateLabel = gridCellLabelFor(3);
+    await roomsPage.selectDate(dateLabel);
+
+    // 2. Check Availability and Initiate Booking
+    await roomsPage.checkAvailabilityButton.click();
+    await roomsPage.clickBookNowByDescription('Please enter a description for this room');
+    await roomsPage.clickReserveNow();
+
+    // 3. Fill Booking Form
+    await roomsPage.fillGuestDetails('Jack', 'Black', 'jblack@test.com', '32216548453');
+
+    // 4. Confirm Reservation
+    await roomsPage.confirmReservation();
+
+    // 5. Assertions & Evidence
+    await expect(roomsPage.confirmationHeading).toBeVisible();
+    await page.screenshot({ path: 'tests/screenshots/booking-confirmation.png', fullPage: true });
+  });
 });
-
-test('Successfully book a room', async ({ page }) => {
-await page.goto('/');
-await page.getByRole('textbox').nth(1).click();
-await page.getByRole('gridcell', { name: 'Choose Sunday, 12 July' }).click();
-await page.getByRole('button', { name: 'Check Availability' }).click();
-await page.getByRole('link', { name: 'Book now' }).nth(2).click();
-await page.getByRole('button', { name: 'Reserve Now' }).click();
-await page.getByRole('textbox', { name: 'Firstname' }).click();
-await page.getByRole('textbox', { name: 'Firstname' }).fill('jack');
-await page.getByRole('textbox', { name: 'Lastname' }).fill('black');
-await page.getByRole('textbox', { name: 'Email' }).fill('jblack@test.com');
-await page.getByRole('textbox', { name: 'Phone' }).fill('32216548451');
-await page.getByRole('button', { name: 'Reserve Now' }).click();
-})
