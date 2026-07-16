@@ -20,6 +20,7 @@
 ### GitHub Actions CI Secrets
 
 For CI runs, add the following repository secrets under GitHub Settings > Secrets and variables > Actions:
+
 - `ADMIN_USERNAME`
 - `ADMIN_PASSWORD`
 
@@ -28,26 +29,31 @@ The workflow loads these secrets into the test environment so admin login can su
 ## Run Instructions
 
 Run all tests with Playwright:
+
 ```bash
 npx playwright test
 ```
 
 Run only admin UI tests:
+
 ```bash
 npx playwright test tests/admin/admin.spec.ts
 ```
 
 Run only booking UI tests:
+
 ```bash
 npx playwright test tests/bookings/rooms.spec.ts
 ```
 
 Run only API tests:
+
 ```bash
 npx playwright test tests/z_api/booking.spec.ts
 ```
 
 Open the HTML report after tests complete:
+
 ```bash
 npx playwright show-report
 ```

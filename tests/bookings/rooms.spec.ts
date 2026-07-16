@@ -13,7 +13,12 @@ test.describe('Room Bookings', () => {
     const roomsPage = new RoomsPage(page);
 
     // Create a room using the adminCreateRoom fixture
-    await adminCreateRoom({ name: '104', price: '20', accessibility: true, amenities: [ RoomAmenity.WIFI, RoomAmenity.TV ] });
+    await adminCreateRoom({
+      name: '104',
+      price: '20',
+      accessibility: true,
+      amenities: [RoomAmenity.WIFI, RoomAmenity.TV],
+    });
 
     // 1. Select Dates
     await page.goto('/');

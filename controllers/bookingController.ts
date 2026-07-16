@@ -10,9 +10,9 @@ export class BookingController {
   async createToken(username: string, password: string): Promise<APIResponse> {
     return await this.request.post('/auth', {
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
-      data: { username, password }
+      data: { username, password },
     });
   }
 
@@ -30,35 +30,44 @@ export class BookingController {
 
   async createBooking(bookingData: object): Promise<APIResponse> {
     return await this.request.post('/booking', {
-      data: bookingData
+      data: bookingData,
     });
   }
 
-  async updateBooking(id: number | string, bookingData: object, token: string): Promise<APIResponse> {
+  async updateBooking(
+    id: number | string,
+    bookingData: object,
+    token: string,
+  ): Promise<APIResponse> {
     return await this.request.put(`/booking/${id}`, {
       headers: {
-        'Cookie': `token=${token}`,
-        'Accept': 'application/json'
+        Cookie: `token=${token}`,
+        Accept: 'application/json',
       },
-      data: bookingData
+      data: bookingData,
     });
   }
 
-  async partialUpdateBooking(id: number | string, partialData: object, token: string): Promise<APIResponse> {
-    return await this.request.patch(`/booking/${id}`, { // Note: Restful-Booker typically uses PATCH for partials
+  async partialUpdateBooking(
+    id: number | string,
+    partialData: object,
+    token: string,
+  ): Promise<APIResponse> {
+    return await this.request.patch(`/booking/${id}`, {
+      // Note: Restful-Booker typically uses PATCH for partials
       headers: {
-        'Cookie': `token=${token}`,
-        'Accept': 'application/json'
+        Cookie: `token=${token}`,
+        Accept: 'application/json',
       },
-      data: partialData
+      data: partialData,
     });
   }
 
   async deleteBooking(id: number | string, token: string): Promise<APIResponse> {
     return await this.request.delete(`/booking/${id}`, {
       headers: {
-        'Cookie': `token=${token}`
-      }
+        Cookie: `token=${token}`,
+      },
     });
   }
 

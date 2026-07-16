@@ -32,7 +32,11 @@ export class RoomsPage {
   }
 
   async clickBookNowByDescription(description: string) {
-    await this.page.locator('.room-card').filter({ hasText: description }).getByRole('link', { name: 'Book now' }).click();
+    await this.page
+      .locator('.room-card')
+      .filter({ hasText: description })
+      .getByRole('link', { name: 'Book now' })
+      .click();
   }
 
   async clickReserveNow() {

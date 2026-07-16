@@ -6,7 +6,7 @@ export enum RoomAmenity {
   TV = 'TV',
   SAFE = 'Safe',
   RADIO = 'Radio',
-  VIEWS = 'Views'
+  VIEWS = 'Views',
 }
 
 export class AdminRoomsPage {
@@ -37,10 +37,16 @@ export class AdminRoomsPage {
     this.roomName = page.getByTestId('roomName');
     this.roomPrice = page.locator('#roomPrice');
     this.wifiCheckbox = page.getByRole('checkbox', { name: 'WiFi' });
-    this.refreshmentDiv = page.locator('div').filter({ hasText: /^Refreshments$/ }).nth(1);
+    this.refreshmentDiv = page
+      .locator('div')
+      .filter({ hasText: /^Refreshments$/ })
+      .nth(1);
     this.tvCheckbox = page.getByRole('checkbox', { name: 'TV' });
     this.safeCheckbox = page.getByRole('checkbox', { name: 'Safe' });
-    this.radioDiv = page.locator('div').filter({ hasText: /^Radio$/ }).nth(1);
+    this.radioDiv = page
+      .locator('div')
+      .filter({ hasText: /^Radio$/ })
+      .nth(1);
     this.viewsCheckbox = page.getByRole('checkbox', { name: 'Views' });
     this.createButton = page.getByRole('button', { name: 'Create' });
     this.roomListing = page.getByTestId('roomlisting');
@@ -58,5 +64,5 @@ export class AdminRoomsPage {
 
   async setAccessibleOption(option: string) {
     await this.accessibleSelect.selectOption(option);
-}
+  }
 }
